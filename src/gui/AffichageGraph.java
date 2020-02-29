@@ -81,7 +81,7 @@ public class AffichageGraph {
             String arete2 = arete.getExtremite2().getNom();
 
             g.addEdge(arete1+ ""+ arete2, arete1, arete2)
-                    .addAttribute("length", 1);
+                    .addAttribute("length", arete.getDistance());
         }
 
         // Dessine les arêtes entre les ordinateurs et commutateurs
@@ -124,9 +124,6 @@ public class AffichageGraph {
         Commutateur commutateur4 = new Commutateur("C4");
 
 
-        /*ordinateur1.associerCommutateur(commutateur1);
-        ordinateur2.associerCommutateur(commutateur2);
-        ordinateur3.associerCommutateur(commutateur3);*/
 
         ordinateur1.associerCommutateur(commutateur1);
         ordinateur2.associerCommutateur(commutateur2);
