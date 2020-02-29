@@ -51,6 +51,6 @@ public class Commutateur extends Equipement {
     }
 
     public String toString(){
-        return this.nom;
+        return super.nom;
     }
 }

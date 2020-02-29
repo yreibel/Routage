@@ -60,4 +60,12 @@ public class Ordinateur extends Equipement{
         this.commutateur = null;
     }
 
+    /**
+     * Méthode toString
+     * @return String
+     */
+    public String toString(){
+        return super.nom;
+    }
+
 }

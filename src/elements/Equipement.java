@@ -3,7 +3,8 @@ package elements;
 import javax.swing.*;
 
 /**
- * Classe Equipement
+ * Classe Abstraite Equipement
+ * Sert de modèle pour la fabrication de Commutateur et Ordinateur
  * @author Yann REIBEL L3 INFO
  */
 public abstract class Equipement {
