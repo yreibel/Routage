@@ -1,7 +1,6 @@
 package elements;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +40,8 @@ public class Commutateur extends Equipement {
     }
 
     /**
-     * Ajouter un routeur voisin à la liste des routeurs
+     * Ajoute un routeur voisin à la liste des routeurs
+     * L'ajoute aussi dans l'instance de l'objet concerné
      * @param valeur
      * @param commutateur
      */
@@ -50,6 +50,20 @@ public class Commutateur extends Equipement {
         commutateur.routeursVoisins.put(this, valeur);
     }
 
+    /**
+     * Retire un routeur voisin à la liste des routeurs
+     * Le retire aussi dans l'instance de l'objet concerné
+     * @param commutateur
+     */
+    public void retirerRouteurVoisin(Commutateur commutateur){
+        this.routeursVoisins.remove(commutateur);
+        commutateur.routeursVoisins.remove(this);
+    }
+
+    /**
+     * Méthode toString
+     * @return String
+     */
     public String toString(){
         return super.nom;
     }

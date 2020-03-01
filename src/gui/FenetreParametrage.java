@@ -103,6 +103,22 @@ public class FenetreParametrage extends JFrame {
     }
 
     /**
+     * Retourne le Panel de Création des équipements du réseau
+     * @return PanelCreation
+     */
+    public PanelCreation getPanelCreation(){
+        return this.panelCreation;
+    }
+
+    /**
+     * Retourne le Panel
+     * @return PanelListeVoisins
+     */
+    public PanelListeVoisins getPanelListeVoisins(){
+        return this.panelListeVoisins;
+    }
+
+    /**
      * Main de lancement de le fenêtre de paramétrage
      * @param args
      */

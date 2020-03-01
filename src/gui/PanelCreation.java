@@ -5,8 +5,9 @@ import elements.Equipement;
 import elements.Ordinateur;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Classe PanelCreation
@@ -27,6 +28,8 @@ public class PanelCreation extends JPanel {
     private DefaultListModel defaultListModel;
 
     private JButton btnSupprimer;
+
+    private JLabel labelNom;
 
     /**
      * Constructeur PanelCreation
@@ -55,12 +58,13 @@ public class PanelCreation extends JPanel {
      */
     public void initialisationPanelAjout(){
         this.panelAjout = new JPanel();
-        //this.panelAjout.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.panelAjout.setLayout(new BorderLayout());
 
         this.choixEquipement = new JComboBox<>();
         this.choixEquipement.addItem("Ordinateur");
         this.choixEquipement.addItem("Commutateur");
+
+        this.labelNom = new JLabel("Nom Equipement  : ");
 
         this.nomEquipement = new JTextField();
 
@@ -68,6 +72,7 @@ public class PanelCreation extends JPanel {
 
         // Ajouts au panel
         this.panelAjout.add(this.choixEquipement, BorderLayout.NORTH);
+        this.panelAjout.add(this.labelNom, BorderLayout.WEST);
         this.panelAjout.add(this.nomEquipement, BorderLayout.CENTER);
         this.panelAjout.add(this.btnAjouter, BorderLayout.SOUTH);
 
@@ -97,7 +102,7 @@ public class PanelCreation extends JPanel {
     }
 
     /**
-     *
+     * Ajoute le panelAjout et le panelListeEquipements au PanelCreation
      */
     public void ajoutPanels(){
         this.add(this.panelAjout);
@@ -105,7 +110,7 @@ public class PanelCreation extends JPanel {
     }
 
     /**
-     *
+     * Ajoute les actions aux composants du PanelCreation
      */
     public void ajoutActions(){
         this.btnSupprimer.addActionListener((e)->{
@@ -132,6 +137,34 @@ public class PanelCreation extends JPanel {
                this.defaultListModel.addElement(commutateur);
            }
         });
+
+        this.jListeEquipements.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 1){
+                    Equipement selection = (Equipement) jListeEquipements.getSelectedValue();
+                    fenetreParametrage.getPanelListeVoisins().nettoyerModele();
+                    fenetreParametrage.getPanelListeVoisins().remplirModele(selection);
+
+                }
+            }
+        });
     }
 
+
+    /**
+     * Retourne le composant JList
+     * @return JList
+     */
+    public JList<Equipement> getJListeEquipements() {
+        return jListeEquipements;
+    }
+
+    /**
+     * Retourne la fenêtre de paramétrage
+     * @return FenetreParametrage
+     */
+    public FenetreParametrage getFenetreParametrage(){
+        return this.fenetreParametrage;
+    }
 }
