@@ -1,8 +1,8 @@
 package gui;
 
-import elements.Commutateur;
-import elements.Equipement;
-import elements.Ordinateur;
+import structure.elements.Commutateur;
+import structure.elements.Equipement;
+import structure.elements.Ordinateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +54,7 @@ public class PanelCreation extends JPanel {
     }
 
     /**
-     *
+     * Initialise du PanelAjout permettant de créer de nouveaux équipements(équipements, commutateurs).
      */
     public void initialisationPanelAjout(){
         this.panelAjout = new JPanel();
@@ -82,7 +82,7 @@ public class PanelCreation extends JPanel {
     }
 
     /**
-     *
+     * Initialise du PanelListeEquipements permettant
      */
     public void initialisationPanelListeEquipements(){
         this.panelListeEquipements = new JPanel(new BorderLayout());
@@ -90,7 +90,7 @@ public class PanelCreation extends JPanel {
 
         this.jListeEquipements = new JList();
         this.jListeEquipements.setModel(this.defaultListModel);
-        this.jListeEquipements.setVisibleRowCount(6);
+        this.jListeEquipements.setVisibleRowCount(10);
         this.jListeEquipements.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         this.btnSupprimer = new JButton("Supprimer Equipement");

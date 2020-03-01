@@ -1,4 +1,8 @@
-package elements;
+package structure;
+
+import structure.elements.AreteCommutateurs;
+import structure.elements.AreteOrdiCommu;
+import structure.elements.Equipement;
 
 import java.util.ArrayList;
 

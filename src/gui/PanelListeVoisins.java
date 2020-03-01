@@ -1,16 +1,12 @@
 package gui;
 
-import elements.AreteCommutateurs;
-import elements.Commutateur;
-import elements.Equipement;
-import elements.Ordinateur;
+import structure.elements.Commutateur;
+import structure.elements.Equipement;
+import structure.elements.Ordinateur;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -146,7 +142,7 @@ public class PanelListeVoisins extends JPanel {
             while (it.hasNext()) {
                 Map.Entry paire = (Map.Entry)it.next();
                 this.defaultListModel.addElement(paire);
-                it.remove(); // avoids a ConcurrentModificationException
+                it.remove();
             }
 
         }

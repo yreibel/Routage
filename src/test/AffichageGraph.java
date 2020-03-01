@@ -1,11 +1,10 @@
 package test;
 
-import elements.*;
-
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import structure.elements.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;

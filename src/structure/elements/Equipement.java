@@ -1,4 +1,4 @@
-package elements;
+package structure.elements;
 
 import javax.swing.*;
 
@@ -10,7 +10,6 @@ import javax.swing.*;
 public abstract class Equipement {
 
     protected String nom;
-    protected static ImageIcon icone;
 
     /**
      * Constructeur Equipement

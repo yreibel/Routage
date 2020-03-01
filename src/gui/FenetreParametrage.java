@@ -1,6 +1,6 @@
 package gui;
 
-import elements.TopologieReseau;
+import structure.TopologieReseau;
 import test.AffichageGraph;
 
 import javax.swing.*;
@@ -58,6 +58,7 @@ public class FenetreParametrage extends JFrame {
      */
     public void initialisationPanelParametrage(){
         this.panelParametrage = new JPanel();
+        this.panelParametrage.setLayout(new FlowLayout(FlowLayout.RIGHT, 100,100));
         this.panelCreation = new PanelCreation(this);
         this.panelListeVoisins = new PanelListeVoisins(this);
 
