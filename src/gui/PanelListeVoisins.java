@@ -7,6 +7,7 @@ import structure.elements.Ordinateur;
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,17 +19,16 @@ public class PanelListeVoisins extends JPanel {
 
     private FenetreParametrage fenetreParametrage;
 
-    private DefaultListModel defaultListModel;
+    private DefaultListModel<Equipement> defaultListModel;
     private JList<Equipement> jListVoisins;
 
-    private SpinnerListModel spinnerListModel;
+    private SpinnerNumberModel spinnerListModel;
     private JSpinner jSpinnerChoixDistance;
 
     private JComboBox<Equipement> jComboBoxEquipements;
 
     private JButton btnAjouter;
     private JButton btnSupprimer;
-
 
 
 
@@ -39,6 +39,8 @@ public class PanelListeVoisins extends JPanel {
     public PanelListeVoisins(FenetreParametrage fenetreParametrage){
         this.fenetreParametrage = fenetreParametrage;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+
         this.initialisationComposants();
         this.ajoutActions();
     }
@@ -50,14 +52,13 @@ public class PanelListeVoisins extends JPanel {
 
         this.jComboBoxEquipements = new JComboBox<>();
 
-        this.spinnerListModel = new SpinnerListModel();
-        this.jSpinnerChoixDistance = new JSpinner();
-        this.jSpinnerChoixDistance.setModel(this.spinnerListModel);
+        this.spinnerListModel = new SpinnerNumberModel(1,1,50,1);
+        this.jSpinnerChoixDistance = new JSpinner(this.spinnerListModel);
 
 
-        this.defaultListModel = new DefaultListModel();
-        this.jListVoisins = new JList<>();
-        this.jListVoisins.setModel(this.defaultListModel);
+        this.defaultListModel = new DefaultListModel<>();
+        this.jListVoisins = new JList<>(this.defaultListModel);
+        this.jListVoisins.setVisibleRowCount(10);
 
         this.btnAjouter = new JButton("Ajouter un Voisin");
         this.btnSupprimer = new JButton("Supprimer Voisin Sélectionné");
@@ -81,37 +82,53 @@ public class PanelListeVoisins extends JPanel {
             // Si
             Equipement selection = this.fenetreParametrage.getPanelCreation().getJListeEquipements().getSelectedValue();
             DefaultListModel modele = (DefaultListModel) this.jListVoisins.getModel();
-            int index = this.jListVoisins.getSelectedIndex();
-            if (index != -1) {
-                modele.remove(index);
+            //int index = this.jListVoisins.getSelectedIndex();
+            //if (index != -1) {
+                Commutateur voisin = (Commutateur) this.jListVoisins.getSelectedValue();
+                //modele.remove(index);
+                modele.removeElement(this.jListVoisins.getSelectedValue());
                 if(selection instanceof Commutateur){
-                    Commutateur voisin = (Commutateur) this.jListVoisins.getSelectedValue();
+                   // Commutateur voisin = (Commutateur) this.jListVoisins.getSelectedValue();
+                    //debut test
+                    ((Commutateur) selection).afficherVoisins();
+                    //fin test
                     ((Commutateur) selection).retirerRouteurVoisin(voisin);
+                    this.nettoyerJComboBoxEquipements();
+                    this.remplirJComboBoxEquipements(selection);
                 }
                 if(selection instanceof Ordinateur){
-                    Commutateur voisin = (Commutateur) this.jListVoisins.getSelectedValue();
+                    //Commutateur voisin = (Commutateur) this.jListVoisins.getSelectedValue();
                     ((Ordinateur) selection).retirerCommutateur();
+                    this.nettoyerJComboBoxEquipements();
+                    this.remplirJComboBoxEquipements(selection);
                 }
+            //}
+        });
+
+
+        this.btnAjouter.addActionListener((e)->{
+            Equipement equipementChoisi = fenetreParametrage.getPanelCreation().getJListeEquipements().getSelectedValue();
+            Commutateur voisinAAJouter = (Commutateur) jComboBoxEquipements.getSelectedItem();
+            int distance = (Integer)jSpinnerChoixDistance.getValue();
+
+            if(equipementChoisi instanceof Commutateur){
+                ((Commutateur) equipementChoisi).ajouterRouteurVoisin(distance, voisinAAJouter);
+                defaultListModel.addElement(voisinAAJouter);
+                //debut test
+                ((Commutateur) equipementChoisi).afficherVoisins();
+                //fin test
+                this.nettoyerJComboBoxEquipements();
+                this.remplirJComboBoxEquipements(equipementChoisi);
+
+            }
+            if(equipementChoisi instanceof Ordinateur){
+                ((Ordinateur) equipementChoisi).associerCommutateur(voisinAAJouter);
+                defaultListModel.addElement(voisinAAJouter);
+                this.nettoyerJComboBoxEquipements();
+                this.remplirJComboBoxEquipements(equipementChoisi);
             }
         });
 
-        this.jComboBoxEquipements.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent itemEvent) {
-                if(jComboBoxEquipements.getSelectedIndex() > 0){
-                    Equipement equipementChoisi = fenetreParametrage.getPanelCreation().getJListeEquipements().getSelectedValue();
-                    Equipement voisinAAJouter = (Equipement)jComboBoxEquipements.getSelectedItem();
-
-                    if(equipementChoisi instanceof Commutateur){
-                        //equipementChoisi.a
-                    }
-                    if(equipementChoisi instanceof Ordinateur){
-
-                    }
-
-                }
-            }
-        });
 
     }
 
@@ -126,7 +143,7 @@ public class PanelListeVoisins extends JPanel {
     /**
      * Vide le modèle utilisé par la JList
      */
-    public void nettoyerModele(){
+    public void nettoyerModeleJListVoisins(){
         this.defaultListModel.clear();
     }
 
@@ -135,14 +152,15 @@ public class PanelListeVoisins extends JPanel {
      * en paramètre de la méthode.
      * @param equipementChoisi
      */
-    public void remplirModele(Equipement equipementChoisi){
+    public void remplirModeleJListVoisins(Equipement equipementChoisi){
         if(equipementChoisi instanceof Commutateur){
 
             Iterator it = ((Commutateur) equipementChoisi).getRouteursVoisins().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry paire = (Map.Entry)it.next();
-                this.defaultListModel.addElement(paire);
-                it.remove();
+                // test
+                this.defaultListModel.addElement((Commutateur) paire.getKey());
+                //it.remove();
             }
 
         }
@@ -151,6 +169,48 @@ public class PanelListeVoisins extends JPanel {
         }
     }
 
+    /**
+     * Retire tous les éléments du JComboBox
+     */
+    public void nettoyerJComboBoxEquipements(){
+        this.jComboBoxEquipements.removeAllItems();
+    }
 
+
+    /**
+     * Remplit le jComBox représentant les éléments ajoutables à la liste de voisins
+     * @param equipement
+     */
+    public void remplirJComboBoxEquipements(Equipement equipement){
+        ArrayList<Equipement> liste = this.fenetreParametrage.getTopologieReseau().getListeEquipements();
+        if(equipement instanceof Ordinateur){
+            if(((Ordinateur) equipement).getCommutateur() == null) {
+                for(Equipement e : liste){
+                    if(e instanceof Commutateur)
+                        this.jComboBoxEquipements.addItem(e);
+                }
+            }
+        }
+        if(equipement instanceof Commutateur){
+            if(((Commutateur) equipement).getRouteursVoisins().isEmpty()){
+                for(Equipement e : liste){
+                    if(e instanceof Commutateur && e != equipement)
+                        this.jComboBoxEquipements.addItem(e);
+                }
+            }
+            else{
+                for(Equipement e : liste){
+                    Iterator it = ((Commutateur) equipement).getRouteursVoisins().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry paire = (Map.Entry)it.next();
+                        if(paire.getKey() != e){
+                            this.jComboBoxEquipements.addItem(e);
+                        }
+                       // it.remove();
+                    }
+                }
+            }
+        }
+    }
 
 }

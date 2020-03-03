@@ -2,6 +2,7 @@ package structure.elements;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -47,6 +48,7 @@ public class Commutateur extends Equipement {
      */
     public void ajouterRouteurVoisin(Integer valeur, Commutateur commutateur){
         this.routeursVoisins.put(commutateur, valeur);
+        System.out.println("ajout" + this.routeursVoisins.isEmpty());
         commutateur.routeursVoisins.put(this, valeur);
     }
 
@@ -56,8 +58,9 @@ public class Commutateur extends Equipement {
      * @param commutateur
      */
     public void retirerRouteurVoisin(Commutateur commutateur){
-        this.routeursVoisins.remove(commutateur);
         commutateur.routeursVoisins.remove(this);
+        this.routeursVoisins.remove(commutateur);
+
     }
 
     /**
@@ -66,5 +69,14 @@ public class Commutateur extends Equipement {
      */
     public String toString(){
         return super.nom;
+    }
+
+    public void afficherVoisins(){
+        String s = "";
+
+        for(Map.Entry<Commutateur,Integer> entry: this.routeursVoisins.entrySet()){
+            System.out.println(entry.getKey().getNom()); //access method in key
+        }
+        //return s;
     }
 }

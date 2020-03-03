@@ -4,6 +4,7 @@ import structure.elements.AreteCommutateurs;
 import structure.elements.AreteOrdiCommu;
 import structure.elements.Equipement;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -98,4 +99,27 @@ public class TopologieReseau {
         this.listeAreteOrdiCommu.remove(areteOrdiCommu);
     }
 
+    /**
+     * Retourne la liste d'équipements
+     * @return ArrayList
+     */
+    public ArrayList<Equipement> getListeEquipements(){
+        return this.listeEquipements;
+    }
+
+    /**
+     * Retourne la liste comprenant les arêtes entre les commutateurs
+     * @return ArrayList
+     */
+    public ArrayList<AreteCommutateurs> getListeAreteCommutateurs(){
+        return this.listeAreteCommutateurs;
+    }
+
+    /**
+     * Retourne la liste comprenant les arêtes entre un ordinateur et un commutateur
+     * @return ArrayList
+     */
+    public ArrayList<AreteOrdiCommu> getListeAreteOrdiCommu(){
+        return this.listeAreteOrdiCommu;
+    }
 }

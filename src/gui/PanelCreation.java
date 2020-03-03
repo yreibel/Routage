@@ -25,7 +25,7 @@ public class PanelCreation extends JPanel {
     private JButton btnAjouter;
 
     private JList<Equipement> jListeEquipements;
-    private DefaultListModel defaultListModel;
+    private DefaultListModel<Equipement> defaultListModel;
 
     private JButton btnSupprimer;
 
@@ -86,10 +86,9 @@ public class PanelCreation extends JPanel {
      */
     public void initialisationPanelListeEquipements(){
         this.panelListeEquipements = new JPanel(new BorderLayout());
-        this.defaultListModel = new DefaultListModel();
+        this.defaultListModel = new DefaultListModel<>();
 
-        this.jListeEquipements = new JList();
-        this.jListeEquipements.setModel(this.defaultListModel);
+        this.jListeEquipements = new JList(this.defaultListModel);
         this.jListeEquipements.setVisibleRowCount(10);
         this.jListeEquipements.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -114,11 +113,11 @@ public class PanelCreation extends JPanel {
      */
     public void ajoutActions(){
         this.btnSupprimer.addActionListener((e)->{
-            DefaultListModel modele = (DefaultListModel) this.jListeEquipements.getModel();
+            DefaultListModel<Equipement> modele = (DefaultListModel<Equipement>) this.jListeEquipements.getModel();
             int index = this.jListeEquipements.getSelectedIndex();
+            this.fenetreParametrage.getTopologieReseau().retirerEquipement(this.jListeEquipements.getSelectedValue());
             if (index != -1) {
                 modele.remove(index);
-                this.fenetreParametrage.getTopologieReseau().retirerEquipement(this.jListeEquipements.getSelectedValue());
             }
         });
 
@@ -143,8 +142,22 @@ public class PanelCreation extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() == 1){
                     Equipement selection = (Equipement) jListeEquipements.getSelectedValue();
-                    fenetreParametrage.getPanelListeVoisins().nettoyerModele();
-                    fenetreParametrage.getPanelListeVoisins().remplirModele(selection);
+
+                    fenetreParametrage.getPanelListeVoisins().nettoyerModeleJListVoisins();
+                    fenetreParametrage.getPanelListeVoisins().remplirModeleJListVoisins(selection);
+
+                    fenetreParametrage.getPanelListeVoisins().nettoyerJComboBoxEquipements();
+                    fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selection);
+
+                    //test
+                    if(selection instanceof Commutateur)
+                       // ((Commutateur) selection).afficherVoisins();
+                    System.out.println(((Commutateur) selection).getRouteursVoisins().isEmpty());
+                    if(selection instanceof Ordinateur)
+                        System.out.println(((Ordinateur) selection).getCommutateur().getNom());
+
+
+                    // fin test
 
                 }
             }
