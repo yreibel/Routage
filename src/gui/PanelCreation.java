@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Classe PanelCreation
@@ -115,7 +117,21 @@ public class PanelCreation extends JPanel {
         this.btnSupprimer.addActionListener((e)->{
             DefaultListModel<Equipement> modele = (DefaultListModel<Equipement>) this.jListeEquipements.getModel();
             int index = this.jListeEquipements.getSelectedIndex();
-            this.fenetreParametrage.getTopologieReseau().retirerEquipement(this.jListeEquipements.getSelectedValue());
+            Equipement selectionSuppression = this.jListeEquipements.getSelectedValue();
+
+            // Si l'élément se trouve dans un arraylist de ses voisins, cela le supprime
+            if(selectionSuppression instanceof Commutateur){
+                Iterator it =  ((Commutateur) selectionSuppression).getRouteursVoisins().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry voisin = (Map.Entry)it.next();
+
+                    if(((Commutateur) voisin.getKey()).getRouteursVoisins().get(selectionSuppression) != null ){
+                       ((Commutateur) voisin.getKey()).retirerRouteurVoisin((Commutateur) selectionSuppression);
+                    }
+                }
+            }
+
+            this.fenetreParametrage.getTopologieReseau().retirerEquipement(selectionSuppression);
             if (index != -1) {
                 modele.remove(index);
             }
