@@ -143,20 +143,22 @@ public class PanelCreation extends JPanel {
            String nomChoisi = this.nomEquipement.getText();
            Equipement selectionneDansListe = this.jListeEquipements.getSelectedValue();
 
-           if(nomEquipement.equals("Ordinateur")){
-                Ordinateur ordinateur = new Ordinateur(nomChoisi);
-                this.fenetreParametrage.getTopologieReseau().ajouterEquipement(ordinateur);
-                this.defaultListModel.addElement(ordinateur);
-           }
+            if(!nomEquipementExisteDeja(nomChoisi)){
+                if(nomEquipement.equals("Ordinateur")){
+                    Ordinateur ordinateur = new Ordinateur(nomChoisi);
+                    this.fenetreParametrage.getTopologieReseau().ajouterEquipement(ordinateur);
+                    this.defaultListModel.addElement(ordinateur);
+                }
 
-          if(nomEquipement.equals("Commutateur")){
-               Commutateur commutateur = new Commutateur(nomChoisi);
-               this.fenetreParametrage.getTopologieReseau().ajouterEquipement(commutateur);
-               this.defaultListModel.addElement(commutateur);
-           }
+                if(nomEquipement.equals("Commutateur")){
+                    Commutateur commutateur = new Commutateur(nomChoisi);
+                    this.fenetreParametrage.getTopologieReseau().ajouterEquipement(commutateur);
+                    this.defaultListModel.addElement(commutateur);
+                }
 
-          this.fenetreParametrage.getPanelListeVoisins().nettoyerJComboBoxEquipements();
-          this.fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selectionneDansListe);
+                this.fenetreParametrage.getPanelListeVoisins().nettoyerJComboBoxEquipements();
+                this.fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selectionneDansListe);
+            }
 
         });
 
@@ -185,6 +187,23 @@ public class PanelCreation extends JPanel {
                 }
             }
         });
+    }
+
+
+    /**
+     * Vérifie si le nom de l'équipement existe déjà
+     * @param nom
+     * @return boolean
+     */
+    public boolean nomEquipementExisteDeja(String nom){
+        for(Equipement e : this.fenetreParametrage.getTopologieReseau().getListeEquipements()){
+            if(e.getNom().equals(nom)){
+                this.nomEquipement.setBackground(Color.RED);
+                return true;
+            }
+        }
+        this.nomEquipement.setBackground(Color.GREEN);
+        return false;
     }
 
 

@@ -1,7 +1,6 @@
 package gui;
 
 import structure.TopologieReseau;
-import test.AffichageGraph;
 
 import javax.swing.*;
 import java.awt.*;
