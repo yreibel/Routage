@@ -145,13 +145,13 @@ public class PanelCreation extends JPanel {
 
             if(!nomEquipementExisteDeja(nomChoisi)){
                 if(nomEquipement.equals("Ordinateur")){
-                    Ordinateur ordinateur = new Ordinateur(nomChoisi);
+                    Ordinateur ordinateur = new Ordinateur(nomChoisi, this.fenetreParametrage.getTopologieReseau());
                     this.fenetreParametrage.getTopologieReseau().ajouterEquipement(ordinateur);
                     this.defaultListModel.addElement(ordinateur);
                 }
 
                 if(nomEquipement.equals("Commutateur")){
-                    Commutateur commutateur = new Commutateur(nomChoisi);
+                    Commutateur commutateur = new Commutateur(nomChoisi, this.fenetreParametrage.getTopologieReseau());
                     this.fenetreParametrage.getTopologieReseau().ajouterEquipement(commutateur);
                     this.defaultListModel.addElement(commutateur);
                 }

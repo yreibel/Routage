@@ -1,5 +1,7 @@
 package structure.elements;
 
+import structure.TopologieReseau;
+
 import javax.swing.*;
 
 /**
@@ -16,8 +18,8 @@ public class Ordinateur extends Equipement{
      * Constructeur Ordinateur
      * @param commutateur
      */
-    public Ordinateur(String nom, Commutateur commutateur){
-        super(nom);
+    public Ordinateur(String nom, Commutateur commutateur, TopologieReseau topologieReseau){
+        super(nom, topologieReseau);
         this.commutateur = commutateur;
     }
 
@@ -25,8 +27,8 @@ public class Ordinateur extends Equipement{
      * Constructeur Ordinateur
      * @param nom
      */
-    public Ordinateur(String nom){
-        super(nom);
+    public Ordinateur(String nom, TopologieReseau topologieReseau){
+        super(nom, topologieReseau);
     }
 
     /**

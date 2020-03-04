@@ -1,5 +1,7 @@
 package structure.elements;
 
+import structure.TopologieReseau;
+
 import javax.swing.*;
 
 /**
@@ -10,13 +12,15 @@ import javax.swing.*;
 public abstract class Equipement {
 
     protected String nom;
+    protected TopologieReseau topologieReseau;
 
     /**
      * Constructeur Equipement
      * @param nom
      */
-    protected Equipement(String nom){
+    protected Equipement(String nom, TopologieReseau topologieReseau){
         this.nom = nom;
+        this.topologieReseau = topologieReseau;
     }
 
     /**

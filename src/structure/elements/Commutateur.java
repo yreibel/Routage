@@ -1,5 +1,9 @@
 package structure.elements;
 
+import javafx.scene.control.Tab;
+import structure.TableRoutage;
+import structure.TopologieReseau;
+
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,14 +18,18 @@ public class Commutateur extends Equipement {
     private static ImageIcon icone = new ImageIcon("");
 
     private Map<Commutateur, Integer> routeursVoisins;
+    private TableRoutage tableRoutage;
+
 
     /**
      * Constructeur Commutateur
      * @param nom
      */
-    public Commutateur(String nom){
-        super(nom);
+    public Commutateur(String nom, TopologieReseau topologieReseau){
+        super(nom, topologieReseau);
+
         this.routeursVoisins = new HashMap<>();
+        this.tableRoutage = new TableRoutage(this, super.topologieReseau);
     }
 
     /**
@@ -38,6 +46,14 @@ public class Commutateur extends Equipement {
      */
     public String getNom(){
         return super.nom;
+    }
+
+    /**
+     * Retourne la table de routage associée au Commutateur
+     * @return TableRoutage
+     */
+    public TableRoutage getTableRoutage(){
+        return this.tableRoutage;
     }
 
     /**
