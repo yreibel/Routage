@@ -141,6 +141,8 @@ public class PanelCreation extends JPanel {
         this.btnAjouter.addActionListener((e)->{
            String nomEquipement =  (String) this.choixEquipement.getSelectedItem();
            String nomChoisi = this.nomEquipement.getText();
+           Equipement selectionneDansListe = this.jListeEquipements.getSelectedValue();
+
            if(nomEquipement.equals("Ordinateur")){
                 Ordinateur ordinateur = new Ordinateur(nomChoisi);
                 this.fenetreParametrage.getTopologieReseau().ajouterEquipement(ordinateur);
@@ -152,6 +154,10 @@ public class PanelCreation extends JPanel {
                this.fenetreParametrage.getTopologieReseau().ajouterEquipement(commutateur);
                this.defaultListModel.addElement(commutateur);
            }
+
+          this.fenetreParametrage.getPanelListeVoisins().nettoyerJComboBoxEquipements();
+          this.fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selectionneDansListe);
+
         });
 
         this.jListeEquipements.addMouseListener(new MouseAdapter() {
