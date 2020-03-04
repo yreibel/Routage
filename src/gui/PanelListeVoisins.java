@@ -199,15 +199,12 @@ public class PanelListeVoisins extends JPanel {
                 }
             }
             else{
-                for(Equipement e : liste){
-                    Iterator it = ((Commutateur) equipement).getRouteursVoisins().entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry paire = (Map.Entry)it.next();
-                        if(paire.getKey() != e){
-                            this.jComboBoxEquipements.addItem(e);
-                        }
-                       // it.remove();
-                    }
+                for(Equipement equipementListe : liste){
+                     if(((Commutateur) equipement).getRouteursVoisins().get(equipementListe) == null){
+                         if (equipementListe instanceof Commutateur && equipementListe != equipement) {
+                             this.jComboBoxEquipements.addItem(equipementListe);
+                         }
+                     }
                 }
             }
         }

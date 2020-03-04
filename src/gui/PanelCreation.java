@@ -131,6 +131,7 @@ public class PanelCreation extends JPanel {
                 }
             }
 
+            // Supprime l'élément de la topologie réseau
             this.fenetreParametrage.getTopologieReseau().retirerEquipement(selectionSuppression);
             if (index != -1) {
                 modele.remove(index);
@@ -166,12 +167,12 @@ public class PanelCreation extends JPanel {
                     fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selection);
 
                     //test
-                    if(selection instanceof Commutateur)
+                    /*if(selection instanceof Commutateur)
                        // ((Commutateur) selection).afficherVoisins();
                     System.out.println(((Commutateur) selection).getRouteursVoisins().isEmpty());
                     if(selection instanceof Ordinateur)
                         System.out.println(((Ordinateur) selection).getCommutateur().getNom());
-
+                    */
 
                     // fin test
 

@@ -122,4 +122,16 @@ public class TopologieReseau {
     public ArrayList<AreteOrdiCommu> getListeAreteOrdiCommu(){
         return this.listeAreteOrdiCommu;
     }
+
+    /**
+     * Affiche la liste d'équipements
+     * @return String
+     */
+    public String afficherListeEquipements(){
+        String s = "";
+        for(Equipement e : this.listeEquipements){
+            s += e.getNom() + " , ";
+        }
+        return s;
+    }
 }
