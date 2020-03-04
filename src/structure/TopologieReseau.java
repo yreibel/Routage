@@ -1,11 +1,11 @@
 package structure;
 
-import structure.elements.AreteCommutateurs;
-import structure.elements.AreteOrdiCommu;
-import structure.elements.Equipement;
+import structure.elements.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Classe Topologie
@@ -133,5 +133,42 @@ public class TopologieReseau {
             s += e.getNom() + " , ";
         }
         return s;
+    }
+
+    /**
+     * Remplit les listes d'arêtes
+     */
+    public void remplirListesAretes(){
+        for(Equipement e : listeEquipements){
+            if(e instanceof Commutateur){
+
+                Iterator it = ((Commutateur) e).getRouteursVoisins().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry paire = (Map.Entry)it.next();
+                    this.ajouterAreteEntreCommutateurs(new AreteCommutateurs((Commutateur)e,
+                            (Commutateur)paire.getKey()));
+                    it.remove(); // avoids a ConcurrentModificationException
+                }
+
+            }
+
+            if(e instanceof Ordinateur){
+                this.ajouterAreteOrdiCommu(new AreteOrdiCommu((Ordinateur)e, ((Ordinateur) e).getCommutateur()));
+            }
+        }
+
+        // On supprime les arêtes en double
+        for(int i=0; i<listeAreteCommutateurs.size(); i++){
+            for(int j=0; j<listeAreteCommutateurs.size(); j++){
+                if(
+                        this.listeAreteCommutateurs.get(i).getExtremite1() == this.listeAreteCommutateurs.get(j).getExtremite2() &&
+                                this.listeAreteCommutateurs.get(i).getExtremite2() == this.listeAreteCommutateurs.get(j).getExtremite1()
+
+                ){
+                    this.listeAreteCommutateurs.remove(j);
+                }
+            }
+        }
+
     }
 }

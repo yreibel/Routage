@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class FenetreParametrage extends JFrame {
 
-    private AffichageGraph affichageGraph;
+    private AffichageGraphe affichageGraphe;
 
     private TopologieReseau topologieReseau;
 
@@ -90,8 +90,9 @@ public class FenetreParametrage extends JFrame {
      */
     public void ajoutActions(){
         this.btnAppliquer.addActionListener((e)->{
+            this.topologieReseau.remplirListesAretes();
             this.dispose();
-            this.affichageGraph = new AffichageGraph();
+            this.affichageGraphe = new AffichageGraphe(this.topologieReseau);
         });
     }
 
