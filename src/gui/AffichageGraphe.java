@@ -5,10 +5,16 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.graphicGraph.GraphicGraph;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.ViewerListener;
+import org.graphstream.ui.view.ViewerPipe;
+import org.graphstream.ui.view.util.MouseManager;
 import structure.TopologieReseau;
 import structure.elements.*;
 
+import java.awt.event.MouseEvent;
 import java.util.*;
 
 /**
@@ -16,10 +22,11 @@ import java.util.*;
  * Utilise les listes de la topologie réseau pour générer un graphe Réseau
  * @author Yann REIBEL L3 INFO
  */
-public class AffichageGraphe {
+public class AffichageGraphe{
 
     private Graph g;
     private TopologieReseau reseau;
+    //protected boolean loop = true;
 
     /**
      * Constructeur AffichageGraphe
@@ -30,9 +37,16 @@ public class AffichageGraphe {
         this.g = this.graphique();
 
         Viewer viewer = this.g.display();
-        //this.g.display(true);
+        //viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
+        /*ViewerPipe fromViewer = viewer.newViewerPipe();
+        fromViewer.addViewerListener(this);
+        fromViewer.addSink(this.g);
+        fromViewer.pump();
+        */
 
-        this.calculRoutage( this.g.getNode("C2"));
+        this.calculAllTableRoutage();
+
+        //this.calculRoutage( this.g.getNode("C2"));
     }
 
     /**
@@ -42,9 +56,6 @@ public class AffichageGraphe {
     public Graph graphique(){
         Graph g = new SingleGraph("graph");
 
-        //g.addAttribute("ui.style", "fill-color: blue;");
-        //g.addAttribute("ui.stylesheet", "graph { fill-color: red; }");
-        //g.addAttribute("ui.stylesheet");
 
         // Ajout des noeuds au graphe
         for(Equipement e : this.reseau.getListeEquipements()){
@@ -91,7 +102,7 @@ public class AffichageGraphe {
      * Calcul de la table de routage pour un Noeud
      * @param noeud
      */
-    public void calculRoutage(Node noeud){
+    public String calculRoutage(Node noeud){
         Dijkstra dijkstra =new Dijkstra(Dijkstra.Element.NODE, null, null);
         dijkstra.init(this.g);
 
@@ -105,7 +116,6 @@ public class AffichageGraphe {
                 commutateurs.add(n);
             }
         }
-
 
         // Récupère tous les voisins et les ajoute à la liste
         Iterator<Node> it = noeud.getNeighborNodeIterator();
@@ -139,8 +149,8 @@ public class AffichageGraphe {
         }
 
         // Calcul et affichage de la table de routage pour un noeud
-        System.out.println(this.afficherTableRoutage(tableRoutage));
-
+        //System.out.println(this.afficherTableRoutage(tableRoutage));
+        return this.afficherTableRoutage(tableRoutage);
     }
 
     /**
@@ -157,7 +167,38 @@ public class AffichageGraphe {
             }
             s += "\n";
         }
+        s += "\n";
 
         return s;
     }
+
+    /**
+     * Calcul la table de routage
+     */
+    public void calculAllTableRoutage(){
+        // Récupère tous les commutateurs du graphe
+        for(Node n : this.g.getNodeSet()){
+            if(n.getLabel("type").equals("commutateur")){
+                System.out.println(n.getId());
+                System.out.println(this.calculRoutage(n));
+            }
+        }
+    }
+
+
+   /* @Override
+    public void viewClosed(String id) {
+        this.loop = false;
+    }
+
+    @Override
+    public void buttonPushed(String id) {
+        System.out.println("test");
+    }
+
+    @Override
+    public void buttonReleased(String id) {
+
+    }
+    */
 }
