@@ -89,8 +89,11 @@ public class FenetreParametrage extends JFrame {
      */
     public void ajoutActions(){
         this.btnAppliquer.addActionListener((e)->{
+            // Remplit les listes d'arêtes à partir des commutateurs et ordinateurs créés
             this.topologieReseau.remplirListesAretes();
+            // Ferme la fenêtre de paramétrage
             this.dispose();
+            // Crée la fenêtre d'affichage du graphe
             this.affichageGraphe = new AffichageGraphe(this.topologieReseau);
         });
     }

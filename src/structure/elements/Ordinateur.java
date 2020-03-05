@@ -10,8 +10,6 @@ import javax.swing.*;
  */
 public class Ordinateur extends Equipement{
 
-    private static ImageIcon icone = new ImageIcon("");
-
     private Commutateur commutateur;
 
     /**

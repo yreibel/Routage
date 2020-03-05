@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Classe Topologie
+ * Représente la topologie avec tous ses éléments (equipements, liens, etc.)
  * @author Yann REIBEL L3 INFO
  */
 public class TopologieReseau {
@@ -124,7 +125,7 @@ public class TopologieReseau {
     }
 
     /**
-     * Affiche la liste d'équipements
+     * Retourne un String de la liste d'équipements
      * @return String
      */
     public String afficherListeEquipements(){

@@ -1,12 +1,9 @@
 package structure.elements;
 
-import javafx.scene.control.Tab;
-import structure.TableRoutage;
 import structure.TopologieReseau;
 
 import javax.swing.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -15,11 +12,7 @@ import java.util.Map;
  */
 public class Commutateur extends Equipement {
 
-    private static ImageIcon icone = new ImageIcon("");
-
     private Map<Commutateur, Integer> routeursVoisins;
-    private TableRoutage tableRoutage;
-
 
     /**
      * Constructeur Commutateur
@@ -27,9 +20,7 @@ public class Commutateur extends Equipement {
      */
     public Commutateur(String nom, TopologieReseau topologieReseau){
         super(nom, topologieReseau);
-
         this.routeursVoisins = new HashMap<>();
-        this.tableRoutage = new TableRoutage(this, super.topologieReseau);
     }
 
     /**
@@ -49,14 +40,6 @@ public class Commutateur extends Equipement {
     }
 
     /**
-     * Retourne la table de routage associée au Commutateur
-     * @return TableRoutage
-     */
-    public TableRoutage getTableRoutage(){
-        return this.tableRoutage;
-    }
-
-    /**
      * Ajoute un routeur voisin à la liste des routeurs
      * L'ajoute aussi dans l'instance de l'objet concerné
      * @param valeur
@@ -64,7 +47,6 @@ public class Commutateur extends Equipement {
      */
     public void ajouterRouteurVoisin(Integer valeur, Commutateur commutateur){
         this.routeursVoisins.put(commutateur, valeur);
-        System.out.println("ajout" + this.routeursVoisins.isEmpty());
         commutateur.routeursVoisins.put(this, valeur);
     }
 

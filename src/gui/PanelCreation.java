@@ -72,7 +72,7 @@ public class PanelCreation extends JPanel {
 
         this.btnAjouter = new JButton("Ajouter");
 
-        // Ajouts au panel
+        // Ajoute les composants au panel
         this.panelAjout.add(this.choixEquipement, BorderLayout.NORTH);
         this.panelAjout.add(this.labelNom, BorderLayout.WEST);
         this.panelAjout.add(this.nomEquipement, BorderLayout.CENTER);
@@ -96,7 +96,7 @@ public class PanelCreation extends JPanel {
 
         this.btnSupprimer = new JButton("Supprimer Equipement");
 
-        // Ajouts au Panel
+        // Ajoute les composants au Panel
         this.panelListeEquipements.add(new JScrollPane(this.jListeEquipements), BorderLayout.NORTH);
         this.panelListeEquipements.add(this.btnSupprimer, BorderLayout.SOUTH);
 
@@ -139,6 +139,7 @@ public class PanelCreation extends JPanel {
         });
 
         this.btnAjouter.addActionListener((e)->{
+
            String nomEquipement =  (String) this.choixEquipement.getSelectedItem();
            String nomChoisi = this.nomEquipement.getText();
            Equipement selectionneDansListe = this.jListeEquipements.getSelectedValue();
@@ -173,16 +174,6 @@ public class PanelCreation extends JPanel {
 
                     fenetreParametrage.getPanelListeVoisins().nettoyerJComboBoxEquipements();
                     fenetreParametrage.getPanelListeVoisins().remplirJComboBoxEquipements(selection);
-
-                    //test
-                    /*if(selection instanceof Commutateur)
-                       // ((Commutateur) selection).afficherVoisins();
-                    System.out.println(((Commutateur) selection).getRouteursVoisins().isEmpty());
-                    if(selection instanceof Ordinateur)
-                        System.out.println(((Ordinateur) selection).getCommutateur().getNom());
-                    */
-
-                    // fin test
 
                 }
             }
